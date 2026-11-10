@@ -278,12 +278,7 @@ small {
 
 /* ---------- footer ---------- */
 .footer {
-    height: calc(70 * var(--u));
-    overflow: hidden;
-}
-
-.footer .ornament {
-    margin-top: calc(-80 * var(--u));
+    padding-bottom: calc(20 * var(--u));
 }
 
 /* ---------- responsive ---------- */
