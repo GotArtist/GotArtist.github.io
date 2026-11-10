@@ -1,0 +1,364 @@
+:root {
+    --tan: #e6cba3;
+    --tan-strong: #f4e2c4;
+    --ink: #1c1309;
+    --bg: #0c0b0a;
+    /* ornament unit: 1px = native size (matches the 3840px wide PDF) */
+    --u: clamp(0.2px, calc(100vw / 3840), 1px);
+    --fs: clamp(15px, 0.92vw, 24px);
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--bg) url("assets/BG_Tileable.png") repeat top left / 1920px auto;
+    color: var(--tan);
+    font-family: "Times New Roman", "Liberation Serif", Times, serif;
+    font-size: var(--fs);
+    line-height: 1.4;
+    overflow-x: hidden;
+}
+
+/* ---------- language handling ---------- */
+html:not([data-lang="fr"]) .fr,
+html[data-lang="fr"] .en {
+    display: none !important;
+}
+
+.lang-switch {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    z-index: 10;
+    display: flex;
+    gap: 6px;
+}
+
+.lang-switch button {
+    font: inherit;
+    font-size: 14px;
+    padding: 3px 10px;
+    color: var(--tan);
+    background: rgba(0, 0, 0, 0.45);
+    border: 1px solid rgba(230, 203, 163, 0.5);
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.lang-switch button:hover,
+.lang-switch button:focus-visible {
+    background: rgba(230, 203, 163, 0.2);
+}
+
+.lang-switch button[aria-pressed="true"] {
+    color: var(--ink);
+    background: var(--tan);
+}
+
+/* ---------- ornament (end cap + tiled bar + center piece) ---------- */
+.ornament {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    height: calc(151 * var(--u));
+    pointer-events: none;
+}
+
+.orn {
+    display: block;
+    flex: none;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+/* all three images share a 42px thick bar; offsets align the bars */
+.orn-end {
+    width: calc(317 * var(--u));
+    height: calc(107 * var(--u));
+    margin-top: calc(4 * var(--u));
+    background-image: url("assets/ORN_End.png");
+}
+
+.orn-end--right {
+    transform: scaleX(-1);
+}
+
+.orn-ext {
+    flex: 1 1 0;
+    min-width: 0;
+    height: calc(78 * var(--u));
+    margin-top: calc(33 * var(--u));
+    background-image: url("assets/ORN_Extension.png");
+    background-repeat: repeat-x;
+    background-size: calc(403 * var(--u)) 100%;
+}
+
+.orn-center {
+    width: calc(1042 * var(--u));
+    height: calc(151 * var(--u));
+    background-image: url("assets/ORN_Center.png");
+}
+
+/* ---------- header ---------- */
+.hero {
+    padding-top: 0.2em;
+}
+
+.title {
+    margin: 0 0 calc(40 * var(--u));
+    text-align: center;
+    font-weight: 400;
+    font-size: clamp(2.2rem, 4.2vw, 6.5rem);
+    line-height: 1.15;
+    color: var(--tan);
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.7);
+}
+
+.banner {
+    position: relative;
+    margin-top: calc(92 * var(--u));
+}
+
+.banner-img {
+    display: block;
+    width: 100%;
+    height: max(calc(100vw * 512 / 3840), 110px);
+    object-fit: cover;
+    object-position: center;
+}
+
+.ornament--top,
+.ornament--bottom {
+    position: absolute;
+    left: 0;
+    z-index: 2;
+}
+
+.ornament--top {
+    top: calc(-92 * var(--u));
+}
+
+.ornament--bottom {
+    top: calc(100% - 50 * var(--u));
+}
+
+/* ---------- content ---------- */
+.content {
+    display: grid;
+    grid-template-columns: 31fr 32fr 21fr;
+    gap: 3.2vw;
+    align-items: start;
+    max-width: 2300px;
+    margin: 0 auto;
+    padding: calc(150 * var(--u) + 1.5em) 4.4vw 3em;
+}
+
+.col p,
+.col ul {
+    margin: 0 0 1em;
+}
+
+.intro {
+    text-align: justify;
+    hyphens: auto;
+}
+
+.intro h2,
+.details h3 {
+    margin: 1.2em 0 0;
+    font-size: 1em;
+    font-weight: 700;
+    color: var(--tan-strong);
+}
+
+.intro p:first-child {
+    margin-top: 0;
+}
+
+.intro h2 + p {
+    margin-top: 0;
+}
+
+.details h3:first-child {
+    margin-top: 0;
+}
+
+.details p {
+    margin-bottom: 0;
+}
+
+strong {
+    color: var(--tan-strong);
+}
+
+small {
+    font-size: 0.72em;
+}
+
+.intro em {
+    font-size: 0.85em;
+}
+
+.bullets {
+    list-style: none;
+    padding: 0;
+}
+
+.bullets li {
+    position: relative;
+    padding-left: 0.9em;
+}
+
+.bullets li::before {
+    content: "";
+    position: absolute;
+    left: 0.15em;
+    top: 0.6em;
+    width: 0.3em;
+    height: 0.3em;
+    background: var(--tan);
+    transform: rotate(45deg);
+}
+
+/* ---------- summary (paint stroke) ---------- */
+.summary {
+    margin-top: 1.5em;
+}
+
+.paint {
+    aspect-ratio: 1288 / 1095;
+    padding: 12% 8% 8% 13%;
+    background: url("assets/PAINT.png") no-repeat center / 100% 100%;
+    color: var(--ink);
+    filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.6));
+}
+
+.paint h2 {
+    margin: 0 0 1.3em;
+    text-align: center;
+    font-size: 1.9em;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+}
+
+.paint ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 1.15em;
+    font-weight: 700;
+}
+
+.paint li {
+    margin-bottom: 1.05em;
+}
+
+.paint li::before {
+    content: "- ";
+}
+
+.paint li small {
+    display: block;
+    margin: 0.1em 0 0 1.4em;
+    font-size: 0.6em;
+    font-weight: 400;
+    transform: rotate(-3deg);
+    transform-origin: left center;
+}
+
+/* ---------- footer ---------- */
+.footer {
+    height: calc(70 * var(--u));
+    overflow: hidden;
+}
+
+.footer .ornament {
+    margin-top: calc(-80 * var(--u));
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 1100px) {
+    :root {
+        --fs: 17px;
+    }
+
+    .content {
+        grid-template-columns: 1fr 1fr;
+        gap: 2em 4vw;
+    }
+
+    .summary {
+        grid-column: 2;
+        grid-row: 1;
+        margin-top: 0;
+    }
+
+    .intro {
+        grid-column: 1;
+        grid-row: 1 / span 2;
+    }
+
+    .details {
+        grid-column: 2;
+        grid-row: 2;
+    }
+}
+
+@media (max-width: 760px) {
+    :root {
+        --fs: 16px;
+    }
+
+    .lang-switch {
+        position: static;
+        justify-content: flex-end;
+        padding: 8px 8px 0;
+    }
+
+    .content {
+        grid-template-columns: minmax(0, 1fr);
+        padding-left: 6vw;
+        padding-right: 6vw;
+    }
+
+    .intro,
+    .summary,
+    .details {
+        grid-column: 1;
+        grid-row: auto;
+    }
+
+    .intro {
+        text-align: left;
+        hyphens: manual;
+    }
+
+    .summary {
+        max-width: 560px;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .paint {
+        padding: 16% 11% 12% 12%;
+    }
+
+    .paint h2 {
+        font-size: 1.6em;
+        margin-bottom: 1em;
+    }
+
+    .paint ul {
+        font-size: 0.95em;
+    }
+}
